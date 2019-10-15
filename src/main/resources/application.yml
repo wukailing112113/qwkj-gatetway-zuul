@@ -1,0 +1,52 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+server:
+  port: 8769
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: wjsy-service-zuul
+
+zuul:
+  routes:
+    prod:
+      path: /prod/**
+      service-id: prod-center
+      stripPrefix: false
+      sensitiveHeaders:
+
+    account:
+      path: /account/**
+      service-id: qwkj-account-center
+      stripPrefix: false
+      sensitiveHeaders:
+
+    qwkjProd:
+      path: /prodcenter/**
+      service-id: qwkj-prod-center
+      stripPrefix: false
+      sensitiveHeaders:
+
+    enterprise:
+      path: /enterprise/**
+      service-id: qwkj-enterprise-center
+      stripPrefix: false
+      sensitiveHeaders:
+
+    origin:
+      path: /origin/**
+      service-id: qwkj-origin-center
+      stripPrefix: false
+      sensitiveHeaders:
+
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 60000
